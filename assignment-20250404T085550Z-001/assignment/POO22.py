@@ -116,8 +116,8 @@ class Experience:
         Experience.listCandidateType_exp.append(self.__Candidatetype)
         Experience.listExpInyear_exp.append(self.__ExpInYear)
         Experience.listProSkill_exp.append(self.__ProSkill)
-        print("\a")
-        print(Experience.listFirstName_exp,Experience.listLastName_exp,Experience.listEmail_exp)
+        CandidateManagementSystem.continueDisplay("continuedisplay")
+        print(Experience.listFirstName_exp,Experience.listLastName_exp)
 class Fresher(Experience):
     listBirthDate_fre = []
     listCandidateId_fre = []
@@ -187,97 +187,119 @@ class CandidateManagementSystem:
               "\n\t 3. Internship \n\t 4. Searching \n\t 5. Exit")
         user=input("Please choose one of the options above: ")
         if user=="1":
-            Candidatetype = 0
-            print(f"Create a new experience candidate")
-            FirstName = input("\tFirst Name: ")
-            LastName = input("\tLast Name: ")
-            BirthDate = input("\tBirthday: ")
-            Phone = input("\tPhone: ")
-            Address = input("\tAddress: ")
-            Email = input("\tEmail: ")
-            YearOfExperience = int(input("\tYear Of Experience: "))
-            RankOfGraduation = input("\tRank Of Graduation (Excellence, Good, Fair, Poor): ")
-            ProSkill = input("\tProfessional skills: ")
-            if len(BirthDate) == 4 and BirthDate.isdigit() == True:
-                if len(Phone) >= 10 and Phone.isdigit() == True:
-                    if RankOfGraduation in CandidateManagementSystem.listRank:
-                        print(BirthDate, Phone)
-                        if Email.find('@') != -1:
-                            candidate1 = Experience(FirstName, LastName, BirthDate, Address, Phone, Email,
-                                                    Candidatetype, YearOfExperience, ProSkill)
-                            candidate1.create_expCandidate()
-                        else:
-                            print("Error! Please check your mail again")
-                    else:
-                        print("Error! Please check your rank graduation again."
-                              "\nThere are only 4 ranks: Excellence, Good, Fair, Poor")
-                else:
-                    print("Error! Please check your phone number again")
-            else:
-                print("Error! Please check your birth date again.\nYou only need to type your year of birth")
+            CandidateManagementSystem.Experience("exp")
         elif user=="2":
-            print(f"Create a new fresher candidate")
-            Candidatetype = 1
-            FirstName = input("\tFirst Name: ")
-            LastName = input("\tLast Name: ")
-            BirthDate = input("\tBirthday: ")
-            Phone = input("\tPhone: ")
-            Address = input("\tAddress: ")
-            Email = input("\tEmail: ")
-            GraduationDate = input("Graduation date: ")
-            RankOfGraduation = input("\tRank Of Graduation (Excellence, Good, Fair, Poor): ")
-            Education = input("Where did you graduate: ")
-            if len(BirthDate) == 4 and BirthDate.isdigit() == True:
-                if len(Phone) >= 10 and Phone.isdigit() == True:
-                    if RankOfGraduation in CandidateManagementSystem.listRank:
-                        print(BirthDate, Phone)
-                        if Email.find('@') != -1:
-                            candidate2 = Fresher(FirstName, LastName, BirthDate, Address, Phone, Email, Candidatetype,
-                                                 GraduationDate, RankOfGraduation, Education)
-                            candidate2.create_expCandidate()
-                        else:
-                            print("Error! Please check your mail again")
-                    else:
-                        print("Error! Please check your rank graduation again."
-                              "\nThere are only 4 ranks: Excellence, Good, Fair, Poor")
-                else:
-                    print("Error! Please check your phone number again")
-            else:
-                print("Error! Please check your birth date again.\nYou only need to type your year of birth")
+            CandidateManagementSystem.Fresher("fre")
         elif user=="3":
-            print(f"Create a new fresher candidate")
-            Candidatetype = 1
-            FirstName = input("\tFirst Name: ")
-            LastName = input("\tLast Name: ")
-            BirthDate = input("\tBirthday: ")
-            Phone = input("\tPhone: ")
-            Address = input("\tAddress: ")
-            Email = input("\tEmail: ")
-            Major=input("\tYour major: ")
-            Semester=input("\tSemester: ")
-            Uniname=input("\tUniversity name: ")
-            RankOfGraduation = input("\tRank Of Graduation (Excellence, Good, Fair, Poor): ")
-            if len(BirthDate) == 4 and BirthDate.isdigit() == True:
-                if len(Phone) >= 10 and Phone.isdigit() == True:
-                    if RankOfGraduation in CandidateManagementSystem.listRank:
-                        print(BirthDate, Phone)
-                        if Email.find('@') != -1:
-                            candidate3 = Fresher(FirstName, LastName, BirthDate, Address, Phone, Email, Candidatetype,
-                                                 Major,Semester,Uniname)
-                            candidate3.create_expCandidate()
-                        else:
-                            print("Error! Please check your mail again")
-                    else:
-                        print("Error! Please check your rank graduation again."
-                              "\nThere are only 4 ranks: Excellence, Good, Fair, Poor")
-                else:
-                    print("Error! Please check your phone number again")
-            else:
-                print("Error! Please check your birth date again.\nYou only need to type your year of birth")
+            CandidateManagementSystem.Intern("intern")
         elif user=="4":
-            temp=4
+            CandidateManagementSystem.Search("search")
         else:
             exit()
-
+    def Experience(self):
+        Candidatetype = 0
+        print(f"CREATE A NEW EXPERIENCE CANDIDATE")
+        FirstName = input("\tFirst Name: ")
+        LastName = input("\tLast Name: ")
+        BirthDate = input("\tBirthday: ")
+        Phone = input("\tPhone: ")
+        Address = input("\tAddress: ")
+        Email = input("\tEmail: ")
+        YearOfExperience = int(input("\tYear Of Experience: "))
+        RankOfGraduation = input("\tRank Of Graduation (Excellence, Good, Fair, Poor): ")
+        ProSkill = input("\tProfessional skills: ")
+        if len(BirthDate) == 4 and BirthDate.isdigit() == True:
+            if len(Phone) >= 10 and Phone.isdigit() == True:
+                if RankOfGraduation in CandidateManagementSystem.listRank:
+                    if Email.find('@') != -1:
+                        candidate1 = Experience(FirstName, LastName, BirthDate, Address, Phone, Email,
+                                                Candidatetype, YearOfExperience, ProSkill)
+                        candidate1.create_expCandidate()
+                    else:
+                        print("Error! Please check your mail again")
+                else:
+                    print("Error! Please check your rank graduation again."
+                          "\nThere are only 4 ranks: Excellence, Good, Fair, Poor")
+            else:
+                print("Error! Please check your phone number again")
+        else:
+            print("Error! Please check your birth date again.\nYou only need to type your year of birth")
+    def Fresher(self):
+        print(f"CREATE A NEW FRESHER CANDIDATE")
+        Candidatetype = 1
+        FirstName = input("\tFirst Name: ")
+        LastName = input("\tLast Name: ")
+        BirthDate = input("\tBirthday: ")
+        Phone = input("\tPhone: ")
+        Address = input("\tAddress: ")
+        Email = input("\tEmail: ")
+        GraduationDate = input("Graduation date: ")
+        RankOfGraduation = input("\tRank Of Graduation (Excellence, Good, Fair, Poor): ")
+        Education = input("Where did you graduate: ")
+        if len(BirthDate) == 4 and BirthDate.isdigit() == True:
+            if len(Phone) >= 10 and Phone.isdigit() == True:
+                if RankOfGraduation in CandidateManagementSystem.listRank:
+                    if Email.find('@') != -1:
+                        candidate2 = Fresher(FirstName, LastName, BirthDate, Address, Phone, Email, Candidatetype,
+                                             GraduationDate, RankOfGraduation, Education)
+                        candidate2.create_expCandidate()
+                    else:
+                        print("Error! Please check your mail again")
+                else:
+                    print("Error! Please check your rank graduation again."
+                          "\nThere are only 4 ranks: Excellence, Good, Fair, Poor")
+            else:
+                print("Error! Please check your phone number again")
+        else:
+            print("Error! Please check your birth date again.\nYou only need to type your year of birth")
+    def Intern(self):
+        print(f"CREATE A NEW INTERN CANDIDATE")
+        Candidatetype = 1
+        FirstName = input("\tFirst Name: ")
+        LastName = input("\tLast Name: ")
+        BirthDate = input("\tBirthday: ")
+        Phone = input("\tPhone: ")
+        Address = input("\tAddress: ")
+        Email = input("\tEmail: ")
+        Major=input("\tYour major: ")
+        Semester=input("\tSemester: ")
+        Uniname=input("\tUniversity name: ")
+        RankOfGraduation = input("\tRank Of Graduation (Excellence, Good, Fair, Poor): ")
+        if len(BirthDate) == 4 and BirthDate.isdigit() == True:
+            if len(Phone) >= 10 and Phone.isdigit() == True:
+                if RankOfGraduation in CandidateManagementSystem.listRank:
+                    if Email.find('@') != -1:
+                        candidate3 = Fresher(FirstName, LastName, BirthDate, Address, Phone, Email, Candidatetype,
+                                             Major,Semester,Uniname)
+                        candidate3.create_expCandidate()
+                    else:
+                        print("Error! Please check your mail again")
+                else:
+                    print("Error! Please check your rank graduation again."
+                          "\nThere are only 4 ranks: Excellence, Good, Fair, Poor")
+            else:
+                print("Error! Please check your phone number again")
+        else:
+            print("Error! Please check your birth date again.\nYou only need to type your year of birth")
+    def Search(self):
+        firstNameSearch=input("Please input Your first Name: ")
+        lastNameSearch=input("Please input Your last Name: ")
+        CandidatetypeSearch=input("Please input Your Candidatetype: ")
+        for dem1 in range(0,len(Experience.listFirstName_exp)):
+            print(Experience.listFirstName_exp[dem1], end=" ")
+        for dem2 in range(0,len(Experience.listLastName_exp)):
+            print(Experience.listFirstName_exp[dem2])
+        for dem3 in range(0,len(Experience.listFirstName_exp)):
+            print(Experience.listLastName_exp[dem3],end=" ")
+        for dem4 in range(0,len(Experience.listFirstName_exp)):
+            print(Experience.listFirstName_exp[dem4])
+        for dem5 in range(0,len(Experience.listFirstName_exp)):
+            print(Experience.listLastName_exp[dem5], end=" ")
+        for dem6 in range(0,len(Experience.listFirstName_exp)):
+            print(Experience.listFirstName_exp[dem6])
+    def continueDisplay(self):
+        user=input("Do you want to continue? \n1.Yes \n2.No")
+        if user == "1":
+            CandidateManagementSystem.mainScreen("mainScreen")
 if __name__=="__main__":
     CandidateManagementSystem().mainScreen()
