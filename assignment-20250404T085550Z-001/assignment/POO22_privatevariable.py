@@ -1,5 +1,3 @@
-from email.headerregistry import Address
-
 class Experience:
     count=0
     listBirthDate_exp = []
@@ -26,83 +24,83 @@ class Experience:
         self.__ProSkill = ProSkill
 
     @property
-    def candidateId(self):
+    def candidateid(self):
         return self.__candidateId
 
-    @candidateId.setter
-    def candidateId(self, candidateId):
+    @candidateid.setter
+    def candidateid(self, candidateId):
         self.__candidateId = candidateId
 
     @property
-    def FirstName(self):
+    def firstname(self):
         return self.__FirstName
 
-    @FirstName.setter
-    def FirstName(self, FirstName):
+    @firstname.setter
+    def firstname(self, FirstName):
         self.__FirstName = FirstName
 
     @property
-    def LastName(self):
+    def lastname(self):
         return self.__LastName
 
-    @LastName.setter
-    def LastName(self, LastName):
+    @lastname.setter
+    def lastname(self, LastName):
         self.__LastName = LastName
 
     @property
-    def BirthDate(self):
+    def birthdate(self):
         return self.__BirthDate
 
-    @BirthDate.setter
-    def BirthDate(self, BirthDate):
+    @birthdate.setter
+    def birthdate(self, BirthDate):
         self.__BirthDate = BirthDate
 
     @property
-    def Address(self):
+    def address(self):
         return self.__Address
 
-    @Address.setter
-    def Address(self, Address):
+    @address.setter
+    def address(self, Address):
         self.__Address = Address
 
     @property
-    def Phone(self):
+    def phone(self):
         return self.__Phone
 
-    @Phone.setter
-    def Phone(self, Phone):
+    @phone.setter
+    def phone(self, Phone):
         self.__Phone = Phone
 
     @property
-    def Email(self):
+    def email(self):
         return self.__Email
 
-    @Email.setter
-    def Email(self, Email):
+    @email.setter
+    def email(self, Email):
         self.__Email = Email
 
     @property
-    def Candidatetype(self):
+    def candidatetype(self):
         return self.__Candidatetype
 
-    @Candidatetype.setter
-    def Candidatetype(self, Candidatetype):
+    @candidatetype.setter
+    def candidatetype(self, Candidatetype):
         self.__Candidatetype = Candidatetype
 
     @property
-    def ExpInYear(self):
+    def expinyear(self):
         return self.__ExpInYear
 
-    @ExpInYear.setter
-    def ExpInYear(self, ExpInYear):
+    @expinyear.setter
+    def expinyear(self, ExpInYear):
         self.__ExpInYear = ExpInYear
 
     @property
-    def ProSkill(self):
+    def proskill(self):
         return self.__ProSkill
 
-    @ProSkill.setter
-    def ProSkill(self, ProSkill):
+    @proskill.setter
+    def proskill(self, ProSkill):
         self.__ProSkill = ProSkill
     #---------------------Methods
     #def create_exp_candidate(self):
@@ -129,19 +127,41 @@ class Fresher(Experience):
     listCandidateType_fre = []
     listExpInyear_fre = []
     listProSkill_fre = []
-    def __init__(self,candidateId,FirstName,LastName,BirthDate,Address,Phone,
+    count = 0
+    def __init__(self,FirstName,LastName,BirthDate,Address,Phone,
                  Email,Candidatetype,Graduation_date,Graduation_rank,Education):
+        Fresher.count += 1
+        self.__candidateId =Fresher.count
         self.__Graduation_date = Graduation_date
         self.__Graduation_rank = Graduation_rank
         self.__Education = Education
-        super().__init__(candidateId,FirstName,LastName,BirthDate,Address,Phone,
-                 Email,Candidatetype)
-    def getGraduationDate(self):
-        return super().getGraduationDate()+self.__Graduation_date
-    def getGraduationRank(self):
-        return super().getGraduationRank()+self.__Graduation_rank
-    def getEducation(self):
-        return super().getEducation()+self.__Education
+        super().__init__(FirstName,LastName,BirthDate,Address,Phone,
+                 Email,Candidatetype,ExpInYear=0,ProSkill=" ")
+
+    @property
+    def graduation_date(self):
+        return self.__Graduation_date
+
+    @graduation_date.setter
+    def graduation_date(self, Graduation_date):
+        self.__Graduation_date = Graduation_date
+
+    @property
+    def graduation_rank(self):
+        return self.__Graduation_rank
+
+    @graduation_rank.setter
+    def graduation_rank(self, Graduation_rank):
+        self.__Graduation_rank = Graduation_rank
+
+    @property
+    def education(self):
+        return self.__Education
+
+    @education.setter
+    def education(self, Education):
+        self.__Education = Education
+
     def create_freCandidate(self):
         Fresher.listFirstName_fre.append(self.__FirstName)
         Fresher.listLastName_fre.append(self.__LastName)
@@ -163,14 +183,17 @@ class Intern(Experience):
     listCandidateType_intern = []
     listExpInyear_intern = []
     listProSkill_intern = []
-    def __init__(self,candidateId,FirstName,LastName,BirthDate,
+    count = 0
+    def __init__(self,FirstName,LastName,BirthDate,
                  Address,Phone,Email,Candidatetype,Majors, Semester, Universityname):
+        Intern.count += 1
+        self.__candidateId = Intern.count
         self.__Majors = Majors
         self.__Semester = Semester
         self.__Universityname = Universityname
         self.__Candidatetype = Candidatetype
-        super().__init__(candidateId, FirstName, LastName, BirthDate, Address, Phone,Email, Candidatetype)
-    def create_freCandidate(self):
+        super().__init__(FirstName, LastName, BirthDate, Address, Phone,Email, Candidatetype,ExpInYear=0,ProSkill=" ")
+    def create_internCandidate(self):
         Intern.listFirstName_intern.append(self.__FirstName)
         Intern.listLastName_intern.append(self.__LastName)
         Intern.listBirthDate_intern.append(self.__BirthDate)
@@ -180,6 +203,7 @@ class Intern(Experience):
         Intern.listCandidateType_intern.append(self.__Candidatetype)
         Intern.listExpInyear_intern.append(self.__ExpInYear)
         Intern.listProSkill_intern.append(self.__ProSkill)
+
 class CandidateManagementSystem:
     listRank=["Excellence","Good","Fair","Poor"]
     def mainScreen(self):
@@ -187,16 +211,16 @@ class CandidateManagementSystem:
               "\n\t 3. Internship \n\t 4. Searching \n\t 5. Exit")
         user=input("Please choose one of the options above: ")
         if user=="1":
-            CandidateManagementSystem.Experience("exp")
+            CandidateManagementSystem.experience_method("exp")
         elif user=="2":
-            CandidateManagementSystem.Fresher("fre")
+            CandidateManagementSystem.fresher_method("fre")
         elif user=="3":
-            CandidateManagementSystem.Intern("intern")
+            CandidateManagementSystem.intern_method("intern")
         elif user=="4":
-            CandidateManagementSystem.Search("search")
+            CandidateManagementSystem.search_method("search")
         else:
             exit()
-    def Experience(self):
+    def experience_method(self):
         Candidatetype = 0
         print(f"CREATE A NEW EXPERIENCE CANDIDATE")
         FirstName = input("\tFirst Name: ")
@@ -217,14 +241,23 @@ class CandidateManagementSystem:
                         candidate1.create_expCandidate()
                     else:
                         print("Error! Please check your mail again")
+                        system=CandidateManagementSystem()
+                        system.mainScreen()
                 else:
                     print("Error! Please check your rank graduation again."
                           "\nThere are only 4 ranks: Excellence, Good, Fair, Poor")
+                    system=CandidateManagementSystem()
+                    system.mainScreen()
             else:
                 print("Error! Please check your phone number again")
+                system=CandidateManagementSystem()
+                system.mainScreen()
         else:
             print("Error! Please check your birth date again.\nYou only need to type your year of birth")
-    def Fresher(self):
+            system=CandidateManagementSystem()
+            system.mainScreen()
+
+    def fresher_method(self):
         print(f"CREATE A NEW FRESHER CANDIDATE")
         Candidatetype = 1
         FirstName = input("\tFirst Name: ")
@@ -233,26 +266,34 @@ class CandidateManagementSystem:
         Phone = input("\tPhone: ")
         Address = input("\tAddress: ")
         Email = input("\tEmail: ")
-        GraduationDate = input("Graduation date: ")
+        GraduationDate = input("\tGraduation date: ")
         RankOfGraduation = input("\tRank Of Graduation (Excellence, Good, Fair, Poor): ")
-        Education = input("Where did you graduate: ")
+        Education = input("\tWhere did you graduate: ")
         if len(BirthDate) == 4 and BirthDate.isdigit() == True:
             if len(Phone) >= 10 and Phone.isdigit() == True:
                 if RankOfGraduation in CandidateManagementSystem.listRank:
                     if Email.find('@') != -1:
                         candidate2 = Fresher(FirstName, LastName, BirthDate, Address, Phone, Email, Candidatetype,
                                              GraduationDate, RankOfGraduation, Education)
-                        candidate2.create_expCandidate()
+                        candidate2.create_freCandidate()
                     else:
                         print("Error! Please check your mail again")
+                        system = CandidateManagementSystem()
+                        system.mainScreen()
                 else:
                     print("Error! Please check your rank graduation again."
                           "\nThere are only 4 ranks: Excellence, Good, Fair, Poor")
+                    system = CandidateManagementSystem()
+                    system.mainScreen()
             else:
                 print("Error! Please check your phone number again")
+                system = CandidateManagementSystem()
+                system.mainScreen()
         else:
             print("Error! Please check your birth date again.\nYou only need to type your year of birth")
-    def Intern(self):
+            system = CandidateManagementSystem()
+            system.mainScreen()
+    def intern_method(self):
         print(f"CREATE A NEW INTERN CANDIDATE")
         Candidatetype = 1
         FirstName = input("\tFirst Name: ")
@@ -269,19 +310,27 @@ class CandidateManagementSystem:
             if len(Phone) >= 10 and Phone.isdigit() == True:
                 if RankOfGraduation in CandidateManagementSystem.listRank:
                     if Email.find('@') != -1:
-                        candidate3 = Fresher(FirstName, LastName, BirthDate, Address, Phone, Email, Candidatetype,
+                        candidate3 = Intern(FirstName, LastName, BirthDate, Address, Phone, Email, Candidatetype,
                                              Major,Semester,Uniname)
-                        candidate3.create_expCandidate()
+                        candidate3.create_internCandidate()
                     else:
                         print("Error! Please check your mail again")
+                        system = CandidateManagementSystem()
+                        system.mainScreen()
                 else:
                     print("Error! Please check your rank graduation again."
                           "\nThere are only 4 ranks: Excellence, Good, Fair, Poor")
+                    system = CandidateManagementSystem()
+                    system.mainScreen()
             else:
                 print("Error! Please check your phone number again")
+                system = CandidateManagementSystem()
+                system.mainScreen()
         else:
             print("Error! Please check your birth date again.\nYou only need to type your year of birth")
-    def Search(self):
+            system = CandidateManagementSystem()
+            system.mainScreen()
+    def search_method(self):
         firstNameSearch=input("Please input Your first Name: ")
         lastNameSearch=input("Please input Your last Name: ")
         CandidatetypeSearch=input("Please input Your Candidatetype: ")
@@ -289,17 +338,18 @@ class CandidateManagementSystem:
             print(Experience.listFirstName_exp[dem1], end=" ")
         for dem2 in range(0,len(Experience.listLastName_exp)):
             print(Experience.listFirstName_exp[dem2])
-        for dem3 in range(0,len(Experience.listFirstName_exp)):
-            print(Experience.listLastName_exp[dem3],end=" ")
-        for dem4 in range(0,len(Experience.listFirstName_exp)):
-            print(Experience.listFirstName_exp[dem4])
-        for dem5 in range(0,len(Experience.listFirstName_exp)):
+        for dem3 in range(0,len(Fresher.listFirstName_fre)):
+            print(Fresher.listLastName_exp[dem3],end=" ")
+        for dem4 in range(0,len(Fresher.listLastName_fre)):
+            print(Fresher.listLastName_fre[dem4])
+        for dem5 in range(0,len(Intern.listFirstName_intern)):
             print(Experience.listLastName_exp[dem5], end=" ")
-        for dem6 in range(0,len(Experience.listFirstName_exp)):
-            print(Experience.listFirstName_exp[dem6])
+        for dem6 in range(0,len(Intern.listFirstName_intern)):
+            print(Intern.listFirstName_intern[dem6])
     def continueDisplay(self):
         user=input("Do you want to continue? \n1.Yes \n2.No")
         if user == "1":
             CandidateManagementSystem.mainScreen("mainScreen")
 if __name__=="__main__":
-    CandidateManagementSystem().mainScreen()
+    system=CandidateManagementSystem()
+    system.mainScreen()
