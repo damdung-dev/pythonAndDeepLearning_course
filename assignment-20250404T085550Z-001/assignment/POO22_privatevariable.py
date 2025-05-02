@@ -173,6 +173,9 @@ class Fresher(Experience):
         Fresher.listCandidateType_fre.append(self.candidatetype)
         Fresher.listExpInyear_fre.append(self.expinyear)
         Fresher.listProSkill_fre.append(self.proskill)
+        system = CandidateManagementSystem()
+        system.continueDisplay()
+
 class Intern(Experience):
     listBirthDate_intern = []
     listCandidateId_intern = []
@@ -194,6 +197,31 @@ class Intern(Experience):
         self.__Universityname = Universityname
         self.__Candidatetype = Candidatetype
         super().__init__(FirstName, LastName, BirthDate, Address, Phone,Email, Candidatetype,ExpInYear=0,ProSkill=" ")
+
+    @property
+    def major(self):
+        return self.__Majors
+
+    @major.setter
+    def major(self, Majors):
+        self.__Majors = Majors
+
+    @property
+    def semester(self):
+        return self.__Semester
+
+    @semester.setter
+    def semester(self, Semester):
+        self.__Semester = Semester
+
+    @property
+    def universityname(self):
+        return self.__Universityname
+
+    @universityname.setter
+    def universityname(self, Universityname):
+        self.__Universityname = Universityname
+
     def create_internCandidate(self):
         Intern.listFirstName_intern.append(self.firstname)
         Intern.listLastName_intern.append(self.lastname)
@@ -204,7 +232,9 @@ class Intern(Experience):
         Intern.listCandidateType_intern.append(self.candidatetype)
         Intern.listExpInyear_intern.append(self.expinyear)
         Intern.listProSkill_intern.append(self.proskill)
-        print()
+        system = CandidateManagementSystem()
+        system.continueDisplay()
+
 class CandidateManagementSystem:
     listRank=["Excellence","Good","Fair","Poor"]
     def mainScreen(self):
@@ -332,25 +362,68 @@ class CandidateManagementSystem:
             system = CandidateManagementSystem()
             system.mainScreen()
     def search_method(self):
-        firstNameSearch=input("Please input Your first Name: ")
-        lastNameSearch=input("Please input Your last Name: ")
-        CandidatetypeSearch=input("Please input Your Candidatetype: ")
-        for dem1 in range(0,len(Experience.listFirstName_exp)):
-            print(Experience.listFirstName_exp[dem1], end=" ")
-        for dem2 in range(0,len(Experience.listLastName_exp)):
-            print(Experience.listFirstName_exp[dem2])
-        for dem3 in range(0,len(Fresher.listFirstName_fre)):
-            print(Fresher.listLastName_exp[dem3],end=" ")
-        for dem4 in range(0,len(Fresher.listLastName_fre)):
-            print(Fresher.listLastName_fre[dem4])
-        for dem5 in range(0,len(Intern.listFirstName_intern)):
-            print(Experience.listLastName_exp[dem5], end=" ")
-        for dem6 in range(0,len(Intern.listFirstName_intern)):
-            print(Intern.listFirstName_intern[dem6])
+        print("-------- SEARCH --------")
+        name = input("Enter Candidate First or Last Name to search: ")
+        candidate_type = input("Enter Candidate Type (0: Experience, 1: Fresher, 2: Intern): ")
+
+        print("-------- LIST OF CANDIDATES --------")
+        print("==================EXPERIENCE CANDIDATE=========================================")
+        for i in range(len(Experience.listFirstName_exp)):
+            print(f"Name: {Experience.listFirstName_exp[i]} {Experience.listLastName_exp[i]}, ")
+        print("==================FRESHER CANDIDATE=========================================")
+        for i in range(len(Fresher.listFirstName_fre)):
+            print(f"Name: {Fresher.listFirstName_fre[i]} {Fresher.listLastName_fre[i]}, ")
+        print("==================INTERN CANDIDATE=========================================")
+        for i in range(len(Intern.listFirstName_intern)):
+            print(f"Name: {Intern.listFirstName_intern[i]} {Intern.listLastName_intern[i]}, ")
+
+        print("-------- THE CANDIDATE FOUND --------")
+        found = False
+        if candidate_type == "0":
+            for i in range(len(Experience.listFirstName_exp)):
+                if name == Experience.listFirstName_exp[i] or name == Experience.listLastName_exp[i]:
+                    found = True
+                    print(f"Name: {Experience.listFirstName_exp[i]} {Experience.listLastName_exp[i]}"
+                          f"|{Experience.listBirthDate_exp[i]}|{Experience.listAddress_exp[i]}"
+                          f"|{Experience.listPhone_exp[i]}|{Experience.listEmail_exp[i]}"
+                          f"|{candidate_type}")
+            system = CandidateManagementSystem()
+            system.mainScreen()
+        elif candidate_type == "1":
+            for i in range(len(Fresher.listFirstName_fre)):
+                if name == Fresher.listFirstName_fre[i] or name == Fresher.listLastName_fre[i]:
+                    found = True
+                    print(f"Name: {Fresher.listFirstName_fre[i]} {Fresher.listLastName_fre[i]}, "
+                          f"|{Fresher.listBirthDate_fre[i]}|{Fresher.listAddress_fre[i]}, "
+                          f"|{Fresher.listPhone_fre[i]}|{Fresher.listEmail_fre[i]}, "
+                          f"|{candidate_type}")
+            system = CandidateManagementSystem()
+            system.mainScreen()
+        elif candidate_type == "2":
+            for i in range(len(Intern.listFirstName_intern)):
+                if name == Intern.listFirstName_intern[i] or name == Intern.listLastName_intern[i]:
+                    found = True
+                    print(f"{Intern.listFirstName_intern[i]}|{Intern.listLastName_intern[i]}, "
+                          f"|{Intern.listBirthDate_intern[i]}|{Intern.listAddress_intern[i]}, "
+                          f"|{Intern.listPhone_intern[i]}|{Intern.listEmail_intern[i]}, "
+                          f"|{candidate_type}")
+            system = CandidateManagementSystem()
+            system.mainScreen()
+        else:
+            print("Invalid candidate type. Please enter 0, 1, or 2.")
+            system = CandidateManagementSystem()
+            system.mainScreen()
+
+        if not found:
+            print("No matching candidate found.")
+            system = CandidateManagementSystem()
+            system.mainScreen()
     def continueDisplay(self):
         user=input("Do you want to continue? \n1.Yes \n2.No")
         if user == "1":
-            CandidateManagementSystem.mainScreen("mainScreen")
+            system = CandidateManagementSystem()
+            system.mainScreen()
+
 if __name__=="__main__":
     system=CandidateManagementSystem()
     system.mainScreen()
