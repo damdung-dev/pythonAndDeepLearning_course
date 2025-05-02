@@ -34,7 +34,8 @@ class Experience:
         Experience.listCandidateType_exp.append(self.Candidatetype)
         Experience.listExpInyear_exp.append(self.ExpInYear)
         Experience.listProSkill_exp.append(self.ProSkill)
-        CandidateManagementSystem.continueDisplay("continuedisplay")
+        system=CandidateManagementSystem()
+        system.continueDisplay()
         print(Experience.listFirstName_exp,Experience.listLastName_exp)
 class Fresher(Experience):
     listBirthDate_fre = []
@@ -107,13 +108,17 @@ class CandidateManagementSystem:
               "\n\t 3. Internship \n\t 4. Searching \n\t 5. Exit")
         user=input("Please choose one of the options above: ")
         if user=="1":
-            CandidateManagementSystem.experience_method("exp")
+            system=CandidateManagementSystem()
+            system.experience_method()
         elif user=="2":
-            CandidateManagementSystem.fresher_method("fre")
+            system = CandidateManagementSystem()
+            system.fresher_method()
         elif user=="3":
-            CandidateManagementSystem.intern_method("intern")
+            system = CandidateManagementSystem()
+            system.intern_method()
         elif user=="4":
-            CandidateManagementSystem.search_method("search")
+            system = CandidateManagementSystem()
+            system.search_method()
         else:
             exit()
     def experience_method(self):
@@ -227,25 +232,59 @@ class CandidateManagementSystem:
             system = CandidateManagementSystem()
             system.mainScreen()
     def search_method(self):
-        firstNameSearch=input("Please input Your first Name: ")
-        lastNameSearch=input("Please input Your last Name: ")
-        CandidatetypeSearch=input("Please input Your Candidatetype: ")
-        for dem1 in range(0,len(Experience.listFirstName_exp)):
-            print(Experience.listFirstName_exp[dem1], end=" ")
-        for dem2 in range(0,len(Experience.listLastName_exp)):
-            print(Experience.listFirstName_exp[dem2])
-        for dem3 in range(0,len(Fresher.listFirstName_fre)):
-            print(Fresher.listLastName_exp[dem3],end=" ")
-        for dem4 in range(0,len(Fresher.listLastName_fre)):
-            print(Fresher.listLastName_fre[dem4])
-        for dem5 in range(0,len(Intern.listFirstName_intern)):
-            print(Experience.listLastName_exp[dem5], end=" ")
-        for dem6 in range(0,len(Intern.listFirstName_intern)):
-            print(Intern.listFirstName_intern[dem6])
+        def search_method(self):
+            print("-------- SEARCH --------")
+            name = input("Enter Candidate First or Last Name to search: ")
+            candidate_type = input("Enter Candidate Type (0: Experience, 1: Fresher, 2: Intern): ")
+
+            print("-------- LIST OF CANDIDATES --------")
+            print("==================EXPERIENCE CANDIDATE=========================================")
+            for i in range(len(Experience.listFirstName_exp)):
+                print(f"Name: {Experience.listFirstName_exp[i]} {Experience.listLastName_exp[i]}, ")
+            print("==================FRESHER CANDIDATE=========================================")
+            for i in range(len(Fresher.listFirstName_fre)):
+                print(f"Name: {Fresher.listFirstName_fre[i]} {Fresher.listLastName_fre[i]}, ")
+            print("==================INTERN CANDIDATE=========================================")
+            for i in range(len(Intern.listFirstName_intern)):
+                print(f"Name: {Intern.listFirstName_intern[i]} {Intern.listLastName_intern[i]}, ")
+
+            print("-------- THE CANDIDATE FOUND --------")
+            found = False
+            if candidate_type == "0":
+                for i in range(len(Experience.listFirstName_exp)):
+                    if name == Experience.listFirstName_exp[i] or name == Experience.listLastName_exp[i]:
+                        found = True
+                        print(f"Name: {Experience.listFirstName_exp[i]} {Experience.listLastName_exp[i]}, "
+                              f"|{Experience.listBirthDate_exp[i]}|{Experience.listAddress_exp[i]}, "
+                              f"|{Experience.listPhone_exp[i]}|{Experience.listEmail_exp[i]}, "
+                              f"|{candidate_type}")
+            elif candidate_type == "1":
+                for i in range(len(Fresher.listFirstName_fre)):
+                    if name == Fresher.listFirstName_fre[i] or name == Fresher.listLastName_fre[i]:
+                        found = True
+                        print(f"Name: {Fresher.listFirstName_fre[i]} {Fresher.listLastName_fre[i]}, "
+                              f"|{Fresher.listBirthDate_fre[i]}|{Fresher.listAddress_fre[i]}, "
+                              f"|{Fresher.listPhone_fre[i]}|{Fresher.listEmail_fre[i]}, "
+                              f"|{candidate_type}")
+            elif candidate_type == "2":
+                for i in range(len(Intern.listFirstName_intern)):
+                    if name == Intern.listFirstName_intern[i] or name == Intern.listLastName_intern[i]:
+                        found = True
+                        print(f"{Intern.listFirstName_intern[i]}|{Intern.listLastName_intern[i]}, "
+                              f"|{Intern.listBirthDate_intern[i]}|{Intern.listAddress_intern[i]}, "
+                              f"|{Intern.listPhone_intern[i]}|{Intern.listEmail_intern[i]}, "
+                              f"|{candidate_type}")
+            else:
+                print("Invalid candidate type. Please enter 0, 1, or 2.")
+
+            if not found:
+                print("No matching candidate found.")
+    
     def continueDisplay(self):
         user=input("Do you want to continue? \n1.Yes \n2.No")
         if user == "1":
-            CandidateManagementSystem.mainScreen("mainScreen")
+            system=CandidateManagementSystem()
+            system.mainScreen()
 if __name__=="__main__":
     system=CandidateManagementSystem()
     system.mainScreen()

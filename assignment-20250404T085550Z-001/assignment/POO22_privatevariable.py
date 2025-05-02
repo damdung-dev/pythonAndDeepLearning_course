@@ -114,7 +114,8 @@ class Experience:
         Experience.listCandidateType_exp.append(self.__Candidatetype)
         Experience.listExpInyear_exp.append(self.__ExpInYear)
         Experience.listProSkill_exp.append(self.__ProSkill)
-        CandidateManagementSystem.continueDisplay("continuedisplay")
+        system=CandidateManagementSystem()
+        system.continueDisplay()
         print(Experience.listFirstName_exp,Experience.listLastName_exp)
 class Fresher(Experience):
     listBirthDate_fre = []
@@ -163,15 +164,15 @@ class Fresher(Experience):
         self.__Education = Education
 
     def create_freCandidate(self):
-        Fresher.listFirstName_fre.append(self.__FirstName)
-        Fresher.listLastName_fre.append(self.__LastName)
-        Fresher.listBirthDate_fre.append(self.__BirthDate)
-        Fresher.listAddress_fre.append(self.__Address)
-        Fresher.listPhone_fre.append(self.__Phone)
-        Fresher.listEmail_fre.append(self.__Email)
-        Fresher.listCandidateType_fre.append(self.__Candidatetype)
-        Fresher.listExpInyear_fre.append(self.__ExpInYear)
-        Fresher.listProSkill_fre.append(self.__ProSkill)
+        Fresher.listFirstName_fre.append(self.firstname)
+        Fresher.listLastName_fre.append(self.lastname)
+        Fresher.listBirthDate_fre.append(self.birthdate)
+        Fresher.listAddress_fre.append(self.address)
+        Fresher.listPhone_fre.append(self.phone)
+        Fresher.listEmail_fre.append(self.email)
+        Fresher.listCandidateType_fre.append(self.candidatetype)
+        Fresher.listExpInyear_fre.append(self.expinyear)
+        Fresher.listProSkill_fre.append(self.proskill)
 class Intern(Experience):
     listBirthDate_intern = []
     listCandidateId_intern = []
@@ -194,16 +195,16 @@ class Intern(Experience):
         self.__Candidatetype = Candidatetype
         super().__init__(FirstName, LastName, BirthDate, Address, Phone,Email, Candidatetype,ExpInYear=0,ProSkill=" ")
     def create_internCandidate(self):
-        Intern.listFirstName_intern.append(self.__FirstName)
-        Intern.listLastName_intern.append(self.__LastName)
-        Intern.listBirthDate_intern.append(self.__BirthDate)
-        Intern.listAddress_intern.append(self.__Address)
-        Intern.listPhone_intern.append(self.__Phone)
-        Intern.listEmail_intern.append(self.__Email)
-        Intern.listCandidateType_intern.append(self.__Candidatetype)
-        Intern.listExpInyear_intern.append(self.__ExpInYear)
-        Intern.listProSkill_intern.append(self.__ProSkill)
-
+        Intern.listFirstName_intern.append(self.firstname)
+        Intern.listLastName_intern.append(self.lastname)
+        Intern.listBirthDate_intern.append(self.birthdate)
+        Intern.listAddress_intern.append(self.address)
+        Intern.listPhone_intern.append(self.phone)
+        Intern.listEmail_intern.append(self.email)
+        Intern.listCandidateType_intern.append(self.candidatetype)
+        Intern.listExpInyear_intern.append(self.expinyear)
+        Intern.listProSkill_intern.append(self.proskill)
+        print()
 class CandidateManagementSystem:
     listRank=["Excellence","Good","Fair","Poor"]
     def mainScreen(self):
