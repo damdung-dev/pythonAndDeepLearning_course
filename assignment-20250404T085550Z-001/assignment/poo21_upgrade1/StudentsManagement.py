@@ -8,8 +8,8 @@ class StudentManagement:
   def students(self):
     return self.__students
   @students.setter
-  def students(self, students):
-    self.__students = students
+  def students(self, Students):
+    self.__students = Students
   # Method
   def create(self):
     # create student
@@ -27,6 +27,13 @@ class StudentManagement:
     print(f"-"*40)
     for x in self.__students:
       print(x)
+  def delete(self,ID):
+    user_id=input("Please input student ID: ")
+    if checkID(user_id)==True:
+      system=input("Do you want to delete this student ID?\n1. Yes    2. No \nYour choice:")
+      self.__students.remove(user_id)
+    else:
+
   def run(self):
     while(True):
       print(f"WELCOME TO STUDENT MANAGEMENT")
@@ -39,6 +46,8 @@ class StudentManagement:
       n = int(input("n: "))
       if n == 1:
         self.create()
+      elif n == 2:
+        self.find()
       elif n==4:
         self.report()
       elif n==5:
