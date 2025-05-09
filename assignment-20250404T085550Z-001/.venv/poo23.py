@@ -1,171 +1,105 @@
-class fruit:
-    list_fruitname = []
-    list_username = []
-    list_fruitprice = []
-    list_quantity = []
-    list_origin = []
-    list_id = []
-    orders = []
-    count = 0
+class Fruit:
+    def __init__(self, fruit_id, name, price, quantity, origin):
+        self.fruit_id = fruit_id
+        self.name = name
+        self.price = price
+        self.quantity = quantity
+        self.origin = origin
 
-    def __init__(self, UserName, FruitName, FruitPrice, Quantity, Origin):
-        self.__UserName = UserName
-        self.__FruitName = FruitName
-        self.__FruitPrice = float(FruitPrice)
-        fruit.count += 1
-        self.__id = fruit.count
-        self.__Quantity = int(Quantity)
-        self.__Origin = Origin
-
-    @property
-    def username(self):
-        return self.__UserName
-
-    @username.setter
-    def username(self, UserName):
-        self.__UserName = UserName
-
-    @property
-    def fruitname(self):
-        return self.__FruitName
-
-    @fruitname.setter
-    def fruitname(self, FruitName):
-        self.__FruitName = FruitName
-
-    @property
-    def fruitprice(self):
-        return self.__FruitPrice
-
-    @fruitprice.setter
-    def fruitprice(self, FruitPrice):
-        self.__FruitPrice = FruitPrice
-
-    @property
-    def quantity(self):
-        return self.__Quantity
-
-    @quantity.setter
-    def quantity(self, Quantity):
-        self.__Quantity = Quantity
-
-    @property
-    def origin(self):
-        return self.__Origin
-
-    @origin.setter
-    def origin(self, Origin):
-        self.__Origin = Origin
-
-    def add_fruit(self):
-        fruit.list_fruitname.append(self.__FruitName)
-        fruit.list_fruitprice.append(self.__FruitPrice)
-        fruit.list_quantity.append(self.__Quantity)
-        fruit.list_origin.append(self.__Origin)
-        fruit.list_id.append(fruit.count)
-        print("Fruit added successfully!")
-        system = fruit_shop_system()
-        system.continue_screen()
+    def __str__(self):
+        return f"{self.fruit_id}. {self.name} ({self.origin}) - {self.price}$"
 
 
-class fruit_shop_system:
-    def main_screen(self):
+class Order:
+    def __init__(self, customer_name):
+        self.customer_name = customer_name
+        self.items = []
+
+    def add_item(self, fruit, quantity):
+        if quantity <= fruit.quantity:
+            self.items.append((fruit, quantity))
+            fruit.quantity -= quantity
+        else:
+            print("Not enough stock available!")
+
+    def display_order(self):
+        print(f"Customer: {self.customer_name}")
+        total = 0
+        for fruit, quantity in self.items:
+            amount = fruit.price * quantity
+            total += amount
+            print(f"{fruit.name} | {quantity} | {fruit.price}$ | {amount}$")
+        print(f"Total: {total}$\n")
+
+
+class FruitShop:
+    def __init__(self):
+        self.fruits = []
+        self.orders = []
+
+    def create_fruit(self):
+        fruit_id = len(self.fruits) + 1
+        name = input("Enter fruit name: ")
+        price = float(input("Enter price: "))
+        quantity = int(input("Enter quantity: "))
+        origin = input("Enter origin: ")
+        self.fruits.append(Fruit(fruit_id, name, price, quantity, origin))
+        print("Fruit added successfully!\n")
+
+    def view_orders(self):
+        if not self.orders:
+            print("No orders yet.\n")
+            return
+        for order in self.orders:
+            order.display_order()
+
+    def shop(self):
+        if not self.fruits:
+            print("No fruits available.\n")
+            return
+
+        print("Available Fruits:")
+        for fruit in self.fruits:
+            print(fruit)
+
+        order = Order(input("Enter your name: "))
+        while True:
+            item_no = int(input("Select fruit number: ")) - 1
+            if 0 <= item_no < len(self.fruits):
+                quantity = int(input(f"Enter quantity for {self.fruits[item_no].name}: "))
+                order.add_item(self.fruits[item_no], quantity)
+            else:
+                print("Invalid selection.")
+
+            cont = input("Do you want to order more? (Y/N): ").upper()
+            if cont == "N":
+                break
+
+        self.orders.append(order)
+        print("Order placed successfully!\n")
+
+    def run(self):
         while True:
             print("\nFRUIT SHOP SYSTEM")
             print("1. Create Fruit")
-            print("2. View orders")
-            print("3. Shopping (for buyer)")
+            print("2. View Orders")
+            print("3. Shopping")
             print("4. Exit")
-            user = input("Please choose (1-4): ")
-            if user == "1":
+            choice = input("Choose an option: ")
+
+            if choice == "1":
                 self.create_fruit()
-            elif user == "2":
+            elif choice == "2":
                 self.view_orders()
-            elif user == "3":
-                self.shopping()
-            elif user == "4":
-                exit()
+            elif choice == "3":
+                self.shop()
+            elif choice == "4":
+                print("Exiting program...")
+                break
             else:
-                print("Invalid choice.")
-
-    def create_fruit(self):
-        print("CREATE FRUIT")
-        username = input("Enter your name: ")
-        name = input("Enter the name of the fruit: ")
-        price = input("Enter the price of the fruit: ")
-        quantity = input("Enter the quantity of the fruit: ")
-        origin = input("Enter the origin of the fruit: ")
-        fruit_input = fruit(username, name, price, quantity, origin)
-        fruit_input.add_fruit()
-
-    def view_orders(self):
-        if not fruit.orders:
-            print("No orders yet.")
-            return
-        for order in fruit.orders:
-            print(f"\nCustomer: {order['username']}")
-            print("Product | Quantity | Price | Amount")
-            total = 0
-            for item in order['items']:
-                amount = item['quantity'] * item['price']
-                total += amount
-                print(f"{item['name']} | {item['quantity']} | {item['price']}$ | {amount}$")
-            print(f"Total: {total}$")
-
-    def shopping(self):
-        if not fruit.list_fruitname:
-            print("No fruits available.")
-            return
-
-        cart = []
-        while True:
-            print("\nList of Fruits:")
-            print("| Item | Fruit Name | Origin | Price | Quantity |")
-            for i in range(len(fruit.list_fruitname)):
-                print(f"{i + 1}. {fruit.list_fruitname[i]} | {fruit.list_origin[i]} | {fruit.list_fruitprice[i]}$ | {fruit.list_quantity[i]}")
-
-            try:
-                item = int(input("Select item number: ")) - 1
-                if item < 0 or item >= len(fruit.list_fruitname):
-                    print("Invalid item.")
-                    continue
-                print(f"You selected: {fruit.list_fruitname[item]}")
-                qty = int(input("Please input quantity: "))
-                if qty > fruit.list_quantity[item]:
-                    print("Not enough stock.")
-                    continue
-                fruit.list_quantity[item] -= qty
-                cart.append({
-                    "name": fruit.list_fruitname[item],
-                    "price": fruit.list_fruitprice[item],
-                    "quantity": qty
-                })
-                choice = input("Do you want to order now (Y/N)? ").lower()
-                if choice == 'y':
-                    break
-            except:
-                print("Invalid input.")
-
-        print("\nYour Order:")
-        total = 0
-        print("Product | Quantity | Price | Amount")
-        for item in cart:
-            amount = item['quantity'] * item['price']
-            total += amount
-            print(f"{item['name']} | {item['quantity']} | {item['price']}$ | {amount}$")
-        print(f"Total: {total}$")
-        username = input("Enter your name: ")
-        fruit.orders.append({"username": username, "items": cart})
-        print("Order placed successfully!")
-
-    def continue_screen(self):
-        user = input("Do you want to continue? \n1. Yes \n2. No\n")
-        if user == "1":
-            self.main_screen()
-        else:
-            print("Returning to main menu...")
+                print("Invalid choice. Please try again.\n")
 
 
 if __name__ == "__main__":
-    system = fruit_shop_system()
-    system.main_screen()
+    shop = FruitShop()
+    shop.run()

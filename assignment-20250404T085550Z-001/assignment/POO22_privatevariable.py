@@ -242,13 +242,13 @@ class CandidateManagementSystem:
               "\n\t 3. Internship \n\t 4. Searching \n\t 5. Exit")
         user=input("Please choose one of the options above: ")
         if user=="1":
-            CandidateManagementSystem.experience_method("exp")
+            self.experience_method()
         elif user=="2":
-            CandidateManagementSystem.fresher_method("fre")
+            self.fresher_method()
         elif user=="3":
-            CandidateManagementSystem.intern_method("intern")
+            self.intern_method()
         elif user=="4":
-            CandidateManagementSystem.search_method("search")
+            self.search_method()
         else:
             exit()
     def experience_method(self):
@@ -289,6 +289,7 @@ class CandidateManagementSystem:
             system.mainScreen()
 
     def fresher_method(self):
+
         print(f"CREATE A NEW FRESHER CANDIDATE")
         Candidatetype = 1
         FirstName = input("\tFirst Name: ")
@@ -309,13 +310,11 @@ class CandidateManagementSystem:
                         candidate2.create_freCandidate()
                     else:
                         print("Error! Please check your mail again")
-                        system = CandidateManagementSystem()
-                        system.mainScreen()
+                        self.mainScreen()
                 else:
                     print("Error! Please check your rank graduation again."
                           "\nThere are only 4 ranks: Excellence, Good, Fair, Poor")
-                    system = CandidateManagementSystem()
-                    system.mainScreen()
+                    self.mainScreen()
             else:
                 print("Error! Please check your phone number again")
                 system = CandidateManagementSystem()
