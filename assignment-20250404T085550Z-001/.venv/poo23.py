@@ -1,105 +1,138 @@
 class Fruit:
     def __init__(self, fruit_id, name, price, quantity, origin):
-        self.fruit_id = fruit_id
-        self.name = name
-        self.price = price
-        self.quantity = quantity
-        self.origin = origin
+        self.__fruit_id = Fruit_id
+        self.__name = Name
+        self.__price = Price
+        self.__quantity = Quantity
+        self.__origin = origin
+    @property
+    def fruit_id(self):
+        return self.__fruit_id
+    @fruit_id.setter
+    def fruit_id(self, Fruit_id):
+        self.__fruit_id = Fruit_id
+    @property
+    def name(self):
+        return self.__name
+    @name.setter
+    def name(self, Name):
+        self.__name = Name
+    @property
+    def price(self):
+        return self.__price
+    @price.setter
+    def price(self, Price):
+        self.__price = Price
+    @property
+    def quantity(self):
+        return self.__quantity
+    @quantity.setter
+    def quantity(self, Quantity):
+        self.__quantity = Quantity
+    @property
+    def origin(self):
+        return self.__origin
+    @origin.setter
+    def origin(self, Origin):
+        self.__origin = Origin
 
-    def __str__(self):
-        return f"{self.fruit_id}. {self.name} ({self.origin}) - {self.price}$"
+    def get_info(self):
+        return f"{self.__fruit_id}. {self.__name} - {self.__origin} - ${self.__price}"
 
+    def update_quantity(self, amount):
+        if self.__quantity >= amount:
+            self.__quantity -= amount
+            return True
+        return False
 
-class Order:
-    def __init__(self, customer_name):
-        self.customer_name = customer_name
-        self.items = []
-
-    def add_item(self, fruit, quantity):
-        if quantity <= fruit.quantity:
-            self.items.append((fruit, quantity))
-            fruit.quantity -= quantity
-        else:
-            print("Not enough stock available!")
-
-    def display_order(self):
-        print(f"Customer: {self.customer_name}")
-        total = 0
-        for fruit, quantity in self.items:
-            amount = fruit.price * quantity
-            total += amount
-            print(f"{fruit.name} | {quantity} | {fruit.price}$ | {amount}$")
-        print(f"Total: {total}$\n")
+    def get_price(self):
+        return self.__price
 
 
 class FruitShop:
     def __init__(self):
-        self.fruits = []
-        self.orders = []
+        self.__fruits = []
+        self.__orders = {}
 
     def create_fruit(self):
-        fruit_id = len(self.fruits) + 1
-        name = input("Enter fruit name: ")
-        price = float(input("Enter price: "))
-        quantity = int(input("Enter quantity: "))
-        origin = input("Enter origin: ")
-        self.fruits.append(Fruit(fruit_id, name, price, quantity, origin))
-        print("Fruit added successfully!\n")
+        while True:
+            fruit_id = len(self.__fruits) + 1
+            name = input("Enter fruit name: ")
+            price = float(input("Enter price: "))
+            quantity = int(input("Enter quantity: "))
+            origin = input("Enter origin: ")
+            self.__fruits.append(Fruit(fruit_id, name, price, quantity, origin))
+            choice = input("Do you want to continue? \n1. Yes    2. No: ")
+            if choice == "2":
+                break
 
     def view_orders(self):
-        if not self.orders:
-            print("No orders yet.\n")
+        if not self.__orders:
+            print("No orders yet.")
             return
-        for order in self.orders:
-            order.display_order()
+        for customer, items in self.__orders.items():
+            print(f"\nCustomer: {customer}")
+            total = 0
+            for fruit, quantity, price in items:
+                amount = quantity * price
+                total += amount
+                print(f"Product |  Quantity  |  Price   |  Amount")
+                print(f"{fruit} | {quantity} | ${price} | ${amount}")
+            print(f"Total: ${total}")
 
-    def shop(self):
-        if not self.fruits:
-            print("No fruits available.\n")
+    def shopping(self):
+        if not self.__fruits:
+            print("No fruits available.")
             return
 
-        print("Available Fruits:")
-        for fruit in self.fruits:
-            print(fruit)
-
-        order = Order(input("Enter your name: "))
+        cart = []
         while True:
-            item_no = int(input("Select fruit number: ")) - 1
-            if 0 <= item_no < len(self.fruits):
-                quantity = int(input(f"Enter quantity for {self.fruits[item_no].name}: "))
-                order.add_item(self.fruits[item_no], quantity)
-            else:
-                print("Invalid selection.")
+            print("\nList of Fruits:")
+            for fruit in self.__fruits:
+                print(fruit.get_info())
 
-            cont = input("Do you want to order more? (Y/N): ").upper()
-            if cont == "N":
+            item = int(input("Select item to buy (0 to finish): "))
+            if item == 0:
                 break
 
-        self.orders.append(order)
-        print("Order placed successfully!\n")
+            quantity = int(input("Enter quantity: "))
+            selected_fruit = self.__fruits[item - 1]
 
-    def run(self):
+            if selected_fruit.update_quantity(quantity):
+                cart.append((selected_fruit.get_info().split(" - ")[0], quantity, selected_fruit.get_price()))
+            else:
+                print("Insufficient stock.")
+
+            choice = input("Do you want to continue? \n1. Yes    2. No: ")
+            if choice == "2":
+                break
+
+        if cart:
+            name = input("Enter your name: ")
+            self.__orders[name] = cart
+            print("\nOrder Summary:")
+            total = 0
+            for fruit, quantity, price in cart:
+                amount = quantity * price
+                total += amount
+                print(f"{fruit} | {quantity} | ${price} | ${amount}")
+            print(f"Total: ${total}")
+
+    def main_menu(self):
         while True:
-            print("\nFRUIT SHOP SYSTEM")
-            print("1. Create Fruit")
-            print("2. View Orders")
-            print("3. Shopping")
-            print("4. Exit")
-            choice = input("Choose an option: ")
-
-            if choice == "1":
+            print("\nFRUIT SHOP SYSTEM\n1. Create Fruit\n2. View Orders\n3. Shopping\n4. Exit")
+            sel = input("Choose one of these  options, Ppleaseplease : ")
+            if sel == "1":
                 self.create_fruit()
-            elif choice == "2":
+            elif sel == "2":
                 self.view_orders()
-            elif choice == "3":
-                self.shop()
-            elif choice == "4":
-                print("Exiting program...")
+            elif sel == "3":
+                self.shopping()
+            elif sel == "4":
                 break
             else:
-                print("Invalid choice. Please try again.\n")
-
+                print("Invalid choice. Please try again.")
 
 if __name__ == "__main__":
     shop = FruitShop()
-    shop.run()
+    shop.main_menu()
