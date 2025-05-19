@@ -1,10 +1,35 @@
 class Doctor:
-    def __init__(self, code, name, specialization, availability):
-        self.code = code
-        self.name = name
-        self.specialization = specialization
-        self.availability = availability
+    def __init__(self, Code, Name, Specialization, Availability):
+        self.__code = Code
+        self.__name = Name
+        self.__specialization = Specialization
+        self.__availability = Availability
+    @property
+    def code(self):
+        return self.__code
+    @code.setter
+    def code(self, Code):
+        self.__code = Code
 
+    @property
+    def name(self):
+        return self.__name
+    @name.setter
+    def name(self, Name):
+        self.__name = Name
+    @property
+    def specialization(self):
+        return self.__specialization
+    @specialization.setter
+    def specialization(self, Specialization):
+        self.__specialization = Specialization
+    @property
+    def availability(self):
+        return self.__availability
+    @availability.setter
+    def availability(self, Availability):
+        self.__availability = Availability
+    @
     def update_info(self, name=None, specialization=None, availability=None):
         if name:
             self.name = name
@@ -14,7 +39,7 @@ class Doctor:
             self.availability = availability
 
     def display_info(self):
-        return f"Code: {self.code}, Name: {self.name}, Specialization: {self.specialization}, Availability: {self.availability}"
+        return f"Code: {self.__code}, Name: {self.__name}, Specialization: {self.__specialization}, Availability: {self.__availability}"
 
 
 class DoctorManagement:
