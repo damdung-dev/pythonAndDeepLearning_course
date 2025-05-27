@@ -12,11 +12,11 @@ class VeNgoi(VeTau):
 
     def thanhTien(self):
         if self.loai=="A":
-            return (super().so_luong*super().don_gia*10)/100
+            return str(super().so_luong*super().don_gia*1.1)
         elif self.loai=="B":
-            return super().so_luong*super().don_gia
+            return str(super().so_luong*super().don_gia)
         else:
-            print("Loại vé của bạn không có sẵn")
+            return "Loại vé của bạn không có sẵn"
     def __str__(self):
         if super().ma_tau in super().list_MaTau:
             if self.loai=="A":
@@ -28,6 +28,6 @@ class VeNgoi(VeTau):
                 st += "Ghế cứng"
                 return st
             else:
-                print("Không có loại ghế quý khách đã chọn")
+                return "Không có loại ghế quý khách đã chọn"
         else:
             return "Lỗi xin vui lòng thử lại"

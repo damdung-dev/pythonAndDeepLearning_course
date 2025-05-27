@@ -12,6 +12,12 @@ class QuanLyVeTau:
         self.__vetau_list.append(vetau)
     def hienThiVeTau(self):
         print("Thông tin vé:")
-        for v in self.__vetau_list:
+        print("Mã vé    |   Mã tàu  |   Giá tiền")
+        for v in self.vetau_list:
             print(v)
-    #def tongGiaTien(self):
+    def tongGiaTien(self):
+        sum=0
+        for v in self.vetau_list:
+            sum=sum+float(v.thanhTien())
+        print( f"Tổng tiền: {sum} VND")
+            
